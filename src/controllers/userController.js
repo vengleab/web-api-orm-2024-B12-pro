@@ -2,7 +2,28 @@ const users = require("../models/users") || [];
 const Response = require("../responseBody/Response");
 
 const getAllUserController = (req, res) => {
-  return res.send(users);
+  let { limit, offset } = req.query;
+  limit = parseInt(limit);
+  offset = parseInt(limit);
+  const filteredUser = [];
+  for(let i=offset; i<(offset+limit) && i<users.length; i++){
+    console.log(i, offset+limit, i<(offset+limit) && i<users.length);
+    filteredUser.push(users[i]);
+  }
+  const total_page = Math.ceil(users.length/limit);
+  const current_page = offset / limit + 1;
+
+  return res.send({
+    data: filteredUser,
+    pagination: {
+      total_records: users.length,
+      limit,
+      offset,
+      current_page,
+      total_page,
+      has_next: current_page < total_page
+    }
+  });
 };
 
 const createNewUserController = (req, res) => {
