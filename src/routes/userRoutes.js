@@ -7,5 +7,4 @@ userRoutes.get("/users", userController.getAllUserController);
 userRoutes.get("/users/:id", userController.getUserByIdController);
 
 userRoutes.post("/users", userController.createNewUserController);
-
 module.exports = userRoutes;

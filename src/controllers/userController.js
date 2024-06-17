@@ -3,6 +3,7 @@ const Response = require("../responseBody/Response");
 
 const getAllUserController = (req, res) => {
   let { limit, offset } = req.query;
+  throw Error("Random Error");
   limit = parseInt(limit);
   offset = parseInt(limit);
   const filteredUser = [];
