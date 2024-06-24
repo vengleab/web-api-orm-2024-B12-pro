@@ -1,4 +1,5 @@
 const express = require("express");
+const morgan = require("morgan")
 const dotenv = require("dotenv");
 const userRoutes = require("./routes/userRoutes");
 const { pageNotFoundMiddleware, endPointNotFoundMiddleware } = require("./middlewares/notFoundMiddleWare");
@@ -9,15 +10,33 @@ const interceptMiddleWare = require("./middlewares/interceptMiddleWare")
 dotenv.config();
 
 const webapp = express();
+webapp.use(morgan("common"))
 webapp.use("/public", express.static("src/assets"));
 
 webapp.use(express.json());
+webapp.use(express.urlencoded())
+
+webapp.post("/", (req, res)=> {
+  res.send(req.body)
+})
 
 webapp.get("/", interceptMiddleWare, (req, res) => {
   console.log("Handling req");
   // for(let i =0; i< 5_000_000_000; i++);
   res.send(
-    "<h1 style='color: red'>Hello world<img src='/public/img/logo.png' /></h1>"
+    `
+    <h1 style='color: red'>
+    
+      <form method="POST" >
+        <input name="email" />
+         <input type="submit" />
+      </form>
+    
+    
+    </h1>
+    
+    
+    `
   );
 });
 
