@@ -4,7 +4,8 @@ const dotenv = require("dotenv");
 const userRoutes = require("./routes/userRoutes");
 const { pageNotFoundMiddleware, endPointNotFoundMiddleware } = require("./middlewares/notFoundMiddleWare");
 const errorMiddleWare = require("./middlewares/errorMiddleWare");
-const interceptMiddleWare = require("./middlewares/interceptMiddleWare")
+const interceptMiddleWare = require("./middlewares/interceptMiddleWare");
+const articleRoutes = require("./routes/articleRoutes");
 
 // dotenv.config({ path: __dirname + "/../.env" });
 dotenv.config();
@@ -14,7 +15,7 @@ webapp.use(morgan("common"))
 webapp.use("/public", express.static("src/assets"));
 
 webapp.use(express.json());
-webapp.use(express.urlencoded())
+// webapp.use(express.urlencoded())
 
 webapp.post("/", (req, res)=> {
   res.send(req.body)
@@ -41,6 +42,7 @@ webapp.get("/", interceptMiddleWare, (req, res) => {
 });
 
 webapp.use("/api", userRoutes);
+webapp.use("/api", articleRoutes);
 
 webapp.use("/api", endPointNotFoundMiddleware)
 webapp.use("/api", errorMiddleWare)
