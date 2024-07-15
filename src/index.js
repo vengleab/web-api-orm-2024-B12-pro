@@ -6,6 +6,7 @@ const { pageNotFoundMiddleware, endPointNotFoundMiddleware } = require("./middle
 const errorMiddleWare = require("./middlewares/errorMiddleWare");
 const interceptMiddleWare = require("./middlewares/interceptMiddleWare");
 const articleRoutes = require("./routes/articleRoutes");
+const authRoutes = require("./routes/authRoutes");
 
 // dotenv.config({ path: __dirname + "/../.env" });
 dotenv.config();
@@ -43,6 +44,7 @@ webapp.get("/", interceptMiddleWare, (req, res) => {
 
 webapp.use("/api", userRoutes);
 webapp.use("/api", articleRoutes);
+webapp.use("/api", authRoutes);
 
 webapp.use("/api", endPointNotFoundMiddleware)
 webapp.use("/api", errorMiddleWare)

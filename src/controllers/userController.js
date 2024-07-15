@@ -1,9 +1,14 @@
 const Response = require("../responseBody/Response");
 const { PrismaClient } = require("@prisma/client");
+const bcrypt = require("bcrypt");
+const env = require("../constants");
 
 const prisma = new PrismaClient();
 
 const getAllUserController = async (req, res) => {
+
+
+
   // let { limit = 10, offset = 0 } = req.query;
   // limit = parseInt(limit);
   // offset = parseInt(offset);
@@ -33,10 +38,11 @@ const getAllUserController = async (req, res) => {
 const createNewUserController = async (req, res) => {
   const body = req.body;
   const { username, password } = body;
+  console.log({ env})
   const newUser = await prisma.user.create({
     data: {
       username,
-      password,
+      password: bcrypt.hashSync(password, bcrypt.genSaltSync(env.BCRYPT_SALT)),
     },
   });
   // users.push(newUser);
